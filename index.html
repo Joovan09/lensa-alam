@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - Koleksi Foto Pemandangan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigasi -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl font-bold text-emerald-600">LensaAlam</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 font-medium text-sm uppercase tracking-wider">
+                    <a href="index.html" class="text-emerald-600 border-b-2 border-emerald-600 pb-1">Beranda</a>
+                    <a href="Galeri.html" class="text-gray-600 hover:text-emerald-600 transition">Galeri</a>
+                    <a href="Tentang.html" class="text-gray-600 hover:text-emerald-600 transition">Tentang</a>
+                    <a href="Profil.html" class="text-gray-600 hover:text-emerald-600 transition">Profil</a>
+                    <a href="Kontak.html" class="text-gray-600 hover:text-emerald-600 transition">Kontak</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="outline-none">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Content -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 p-4">
+            <div class="flex flex-col space-y-3 font-medium">
+                <a href="Beranda.html" class="text-emerald-600">Beranda</a>
+                <a href="Galeri.html" class="text-gray-600">Galeri</a>
+                <a href="Berita.html" class="text-gray-600">Berita</a>
+                <a href="Tentang.html" class="text-gray-600">Tentang</a>
+                <a href="Profil.html" class="text-gray-600">Profil</a>
+                <a href="Kontak.html" class="text-gray-600">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-gradient h-[500px] flex items-center justify-center text-center text-white px-4">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Keindahan Alam Lewat Lensa Kami</h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-8 font-light">Kolaborasi koleksi foto pemandangan eksklusif dari Jovan, Ahmat, dan Nur.</p>
+            <a href="Galeri.html" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full font-semibold transition transform hover:scale-105">Lihat Galeri</a>
+        </div>
+    </header>
+
+    <!-- Pengenalan Singkat Section (Pengganti Kartu) -->
+    <section class="max-w-4xl mx-auto py-16 px-4 text-center">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Tentang Koleksi Kami</h2>
+        <p class="text-gray-600 leading-relaxed text-lg">
+            Situs ini merupakan wadah kolaborasi antara <span class="font-semibold text-emerald-600">Jovan</span>, 
+            <span class="font-semibold text-blue-600">Ahmat</span>, dan <span class="font-semibold text-purple-600">Nur</span>. 
+            Kami merangkum keindahan gunung, pantai, hingga ketenangan hutan dalam satu galeri visual untuk Anda nikmati.
+        </p>
+        <div class="mt-6 h-1 w-16 bg-emerald-500 mx-auto rounded-full"></div>
+    </section>
+
+    <!-- Highlight Galeri -->
+    <section class="bg-gray-100 py-16 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold">Karya Terbaru</h2>
+                    <p class="text-gray-600">Intip beberapa koleksi foto favorit kami</p>
+                </div>
+                <a href="Galeri.html" class="text-emerald-600 font-semibold hover:underline mt-4 md:mt-0">Lihat Semua koleksi  &rarr;</a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Image 1 -->
+                <div class="group relative overflow-hidden rounded-xl shadow-lg aspect-video">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=800" alt="Pemandangan Lembah" class="object-cover w-full h-full transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-4 opacity-0 group-hover:opacity-100 transition duration-300">
+                        <p class="text-white font-medium text-sm">Lembah Hijau - Koleksi Jovan</p>
+                    </div>
+                </div>
+
+                <!-- Image 2 -->
+                <div class="group relative overflow-hidden rounded-xl shadow-lg aspect-video">
+                    <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&q=80&w=800" alt="Pemandangan Danau" class="object-cover w-full h-full transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-4 opacity-0 group-hover:opacity-100 transition duration-300">
+                        <p class="text-white font-medium text-sm">Danau Tenang - koleksi Ahmat</p>
+                    </div>
+                </div>
+
+                <!-- Image 3 -->
+                <div class="group relative overflow-hidden rounded-xl shadow-lg aspect-video">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800" alt="Pemandangan Hutan" class="object-cover w-full h-full transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-4 opacity-0 group-hover:opacity-100 transition duration-300">
+                        <p class="text-white font-medium text-sm">Hutan Cahaya - koleksi Nur</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-b border-gray-800 pb-8">
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-2">LensaAlam</h2>
+                <p class="text-sm">Dokumentasi keindahan alam melalui kolaborasi tiga teman sekelas.</p>
+            </div>
+            <div class="flex space-x-6 md:justify-end">
+                <a href="Beranda.html" class="hover:text-white transition">Beranda</a>
+                <a href="Galeri.html" class="hover:text-white transition">Galeri</a>
+                <a href="Kontak.html" class="hover:text-white transition">Kontak</a>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-8 text-center text-xs">
+            &copy; 2026 LensaAlam. Dibuat dengan dedikasi sepenuh hati oleh Jovan, Ahmat, & Nur.
+        </div>
+    </footer>
+
+    <script>
+        // Script untuk mobile menu toggle
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>

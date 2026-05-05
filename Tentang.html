@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - LensaAlam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigasi -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <span class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">LensaAlam</span>
+                
+                <div class="hidden md:flex space-x-8 font-medium text-xs uppercase tracking-widest items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
+                    <a href="Galeri.html" class="text-gray-600 hover:text-emerald-600 transition">Galeri</a>
+                    <a href="Tentang.html" class="text-emerald-600 border-b-2 border-emerald-600 pb-1">Tentang</a>
+                    <a href="Profil.html" class="text-gray-600 hover:text-emerald-600 transition">Profil</a>
+                    <a href="Kontak.html" class="text-gray-600 hover:text-emerald-600 transition">Kontak</a>
+                </div>
+
+                <div class="md:hidden">
+                    <button class="text-gray-600 p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto pt-20 pb-16 px-4 text-center animate-fade-in">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight text-gray-800">Dibalik Lensa Kami</h1>
+        <p class="text-gray-500 max-w-3xl mx-auto text-lg leading-relaxed">
+            LensaAlam lahir dari kecintaan kami terhadap keajaiban dunia. Kami adalah kolektif fotografer amatir yang berdedikasi untuk menangkap momen-momen tenang di tengah riuhnya dunia.
+        </p>
+    </section>
+
+    <!-- Tim Section -->
+    <section class="max-w-7xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            
+            <!-- Anggota 1: Jovan -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 text-center group">
+                <div class="w-32 h-32 bg-emerald-100 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white shadow-md">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jovan" alt="Jovan" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Jovan</h3>
+                <p class="text-emerald-600 font-medium mb-4 italic">Landscape Architect</p>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    Fokus pada simetri pegunungan dan drama cahaya kabut pagi. Jovan percaya bahwa setiap puncak memiliki cerita abadi.
+                </p>
+            </div>
+
+            <!-- Anggota 2: Ahmat -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 text-center group">
+                <div class="w-32 h-32 bg-teal-100 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white shadow-md">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmat" alt="Ahmat" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Ahmat</h3>
+                <p class="text-emerald-600 font-medium mb-4 italic">Marine & Coast Visionary</p>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    Pecinta garis pantai dan gradasi warna laut. Ahmat sering menghabiskan waktu menunggu momen matahari terbenam yang sempurna.
+                </p>
+            </div>
+
+            <!-- Anggota 3: Nur -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 text-center group">
+                <div class="w-32 h-32 bg-green-100 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden border-4 border-white shadow-md">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nur" alt="Nur" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Nur</h3>
+                <p class="text-emerald-600 font-medium mb-4 italic">Forestry Specialist</p>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    Menangkap detail kecil di lantai hutan yang sering terlewatkan. Nur membawa kedamaian hijau ke dalam setiap jepretannya.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Misi Section -->
+    <section class="bg-emerald-600 mt-20 py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h2 class="text-3xl font-bold mb-8">Misi Kolaborasi Kami</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                <div>
+                    <h4 class="text-xl font-semibold mb-3 flex items-center">
+                        <span class="bg-white/20 p-2 rounded-lg mr-3">01</span> Preservasi Visual
+                    </h4>
+                    <p class="text-emerald-100 text-sm">Mendokumentasikan keindahan alam yang kian terancam sebagai pengingat bagi generasi mendatang.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-3 flex items-center">
+                        <span class="bg-white/20 p-2 rounded-lg mr-3">02</span> Komunitas Terbuka
+                    </h4>
+                    <p class="text-emerald-100 text-sm">Membangun wadah apresiasi di mana setiap mata memiliki perspektif unik yang dihargai.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center text-gray-400 text-sm border-t mt-auto">
+        <p>&copy; 2024 Kolaborasi LensaAlam (Jovan, Ahmat, Nur). Dibuat dengan dedikasi.</p>
+    </footer>
+
+</body>
+</html>

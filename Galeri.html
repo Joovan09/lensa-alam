@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Interaktif - LensaAlam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        
+        .masonry { column-count: 1; column-gap: 1.5rem; }
+        @media (min-width: 640px) { .masonry { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry { column-count: 3; } }
+        @media (min-width: 1280px) { .masonry { column-count: 4; } }
+        
+        .masonry-item { break-inside: avoid; margin-bottom: 1.5rem; transition: all 0.3s ease; }
+        
+        #photo-modal { display: none; background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(8px); }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
+
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigasi -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <span class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">LensaAlam</span>
+                
+                <div class="hidden md:flex space-x-8 font-medium text-xs uppercase tracking-widest items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-emerald-600 transition">Beranda</a>
+                    <a href="Galeri.html" class="text-emerald-600 border-b-2 border-emerald-600 pb-1">Galeri</a>
+                    <a href="Tentang.html" class="text-gray-600 hover:text-emerald-600 transition">Tentang</a>
+                    <a href="Profil.html" class="text-gray-600 hover:text-emerald-600 transition">Profil</a>
+                    <a href="Kontak.html" class="text-gray-600 hover:text-emerald-600 transition">Kontak</a>
+                </div>
+
+                <div class="md:hidden">
+                    <button class="text-gray-600 p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto pt-16 pb-8 px-4 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight text-gray-800 animate-fade-in">Galeri Komunitas</h1>
+        <p class="text-gray-500 max-w-2xl mx-auto text-lg">Jelajahi keindahan alam melalui kolaborasi galeri kami dan berikan apresisasi lalu tinggalkan pesan menarik.</p>
+        
+        <!-- Filter Tab -->
+        <div class="flex flex-wrap justify-center gap-3 mt-8 animate-fade-in" style="animation-delay: 0.1s">
+            <button onclick="window.filterGallery('Semua')" class="px-6 py-2 rounded-full bg-emerald-600 text-white font-medium shadow-md transition hover:bg-emerald-700">Semua</button>
+            <button onclick="window.filterGallery('Jovan')" class="px-6 py-2 rounded-full bg-white text-gray-600 border border-gray-200 font-medium hover:border-emerald-500 hover:text-emerald-600 transition">Jovan</button>
+            <button onclick="window.filterGallery('Ahmat')" class="px-6 py-2 rounded-full bg-white text-gray-600 border border-gray-200 font-medium hover:border-emerald-500 hover:text-emerald-600 transition">Ahmat</button>
+            <button onclick="window.filterGallery('Nur')" class="px-6 py-2 rounded-full bg-white text-gray-600 border border-gray-200 font-medium hover:border-emerald-500 hover:text-emerald-600 transition">Nur</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 pb-20 mt-8">
+        <div id="gallery-container" class="masonry">
+            <!-- Loader -->
+            <div id="loader" class="col-span-full flex justify-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Detail Foto -->
+    <div id="photo-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <button onclick="window.closeModal()" class="absolute top-6 right-6 text-white hover:rotate-90 transition-all duration-300 z-[110]">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        
+        <div class="max-w-6xl w-full flex flex-col md:flex-row bg-white rounded-3xl overflow-hidden shadow-2xl max-h-[90vh]">
+            <div class="md:w-2/3 bg-neutral-900 flex items-center justify-center relative overflow-hidden min-h-[300px]">
+                <img id="modal-img" src="" class="max-w-full max-h-full object-contain">
+            </div>
+
+            <div class="md:w-1/3 p-6 flex flex-col bg-white">
+                <div class="border-b pb-4 mb-4">
+                    <h2 id="modal-title" class="text-2xl font-bold text-gray-800"></h2>
+                    <p id="modal-author" class="text-emerald-600 font-medium"></p>
+                </div>
+                
+                <div id="comment-list" class="flex-grow overflow-y-auto mb-4 space-y-4 custom-scrollbar pr-2 min-h-[150px]"></div>
+
+                <div class="pt-4 border-t">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <button id="modal-like-btn" onclick="window.handleModalLike()" class="transition-transform active:scale-150">
+                                <svg id="modal-like-icon" class="w-8 h-8 text-gray-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </button>
+                            <span id="modal-like-count" class="text-xl font-bold text-gray-700">0</span>
+                        </div>
+                    </div>
+                    <form id="comment-form" class="flex gap-2">
+                        <input type="text" id="comment-input" placeholder="Tulis komentar..." 
+                               class="flex-1 bg-gray-100 border-none rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                        <button type="submit" class="bg-emerald-600 text-white p-3 rounded-xl hover:bg-emerald-700 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, updateDoc, arrayUnion, increment, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const isFirebaseActive = Object.keys(firebaseConfig).length > 0;
+        
+        const app = isFirebaseActive ? initializeApp(firebaseConfig) : null;
+        const db = isFirebaseActive ? getFirestore(app) : null;
+        const auth = isFirebaseActive ? getAuth(app) : null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'demo-lensa-alam';
+
+        let currentUser = null;
+        let activePhotoId = null;
+        let currentFilter = 'Semua';
+        let modalUnsubscribe = null;
+        let localData = JSON.parse(localStorage.getItem('lensa_alam_data')) || {};
+
+        // DATA GAMBAR (Total 16 foto: 6 lama + 10 baru)
+        const photos = [
+            { id: 'p1', title: 'Kolam Renang', author: 'Jovan', url: 'foto-jovan/j1.jpeg' }, 
+            { id: 'p2', title: 'Langit Jawa', author: 'Ahmat', url: 'foto-ahmat/a2.jpeg' },
+            { id: 'p3', title: 'Sunset Yobeh', author: 'Nur', url: 'foto-nur/n2.jpeg' },
+            { id: 'p4', title: 'Danau Sentani', author: 'Nur', url: 'foto-nur/n1.jpeg' },
+            { id: 'p5', title: 'Bukit Macarthur', author: 'Jovan', url: 'foto-jovan/j2.jpeg' },
+            { id: 'p6', title: 'Lampu kota', author: 'Ahmat', url: 'foto-ahmat/a1.jpeg' },
+            { id: 'p7', title: 'Adalah pokoknya', author: 'Jovan', url: 'foto-jovan/j3.jpeg' },
+            { id: 'p8', title: 'Bukit dekat Yobeh', author: 'Nur', url: 'foto-nur/n3.jpeg' },
+            { id: 'p9', title: 'My sunshine', author: 'Ahmat', url: 'foto-ahmat/a3.jpeg' },
+            { id: 'p10', title: 'Pantai Hol', author: 'Jovan', url: 'foto-jovan/j11.jpeg' },
+            { id: 'p11', title: 'Pantai', author: 'Jovan', url: 'foto-jovan/j4.jpeg' },
+            { id: 'p12', title: 'Rumah Gadang', author: 'Ahmat', url: 'foto-ahmat/a4.jpeg' },
+            { id: 'p13', title: 'Pasir pantai', author: 'Nur', url: 'foto-nur/n4.jpeg' },
+            { id: 'p14', title: 'Langit biru', author: 'Jovan', url: 'foto-jovan/j5.jpeg' },
+            { id: 'p15', title: 'Japrax', author: 'Nur', url: 'foto-nur/n5.jpeg' },
+            { id: 'p16', title: 'Stasiun sepi', author: 'Ahmat', url: 'foto-ahmat/a5.jpeg' }
+        ];
+
+        const initAuth = async () => {
+            if (!isFirebaseActive) {
+                currentUser = { uid: 'guest-' + Math.random().toString(36).substr(2, 5) };
+                startApp();
+                return;
+            }
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else { await signInAnonymously(auth); }
+            } catch (error) { console.error("Auth error:", error); }
+        };
+
+        if (isFirebaseActive) {
+            onAuthStateChanged(auth, (user) => { if (user) { currentUser = user; startApp(); } });
+        }
+
+        const startApp = () => {
+            const loader = document.getElementById('loader');
+            if (loader) loader.remove();
+            renderGallery();
+        };
+
+        window.filterGallery = (author) => {
+            currentFilter = author;
+            renderGallery();
+            // Update button styles
+            const btns = document.querySelectorAll('header button');
+            btns.forEach(btn => {
+                if(btn.innerText === author) {
+                    btn.classList.add('bg-emerald-600', 'text-white');
+                    btn.classList.remove('bg-white', 'text-gray-600');
+                } else {
+                    btn.classList.remove('bg-emerald-600', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-600');
+                }
+            });
+        };
+
+        function renderGallery() {
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+            
+            const filteredPhotos = currentFilter === 'Semua' 
+                ? photos 
+                : photos.filter(p => p.author === currentFilter);
+
+            filteredPhotos.forEach(photo => {
+                if (!localData[photo.id]) {
+                    localData[photo.id] = { likes: 0, comments: [], likedBy: [] };
+                }
+                
+                const item = document.createElement('div');
+                item.id = `item-${photo.id}`;
+                item.className = 'masonry-item bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 animate-fade-in';
+                container.appendChild(item);
+
+                if (isFirebaseActive && currentUser) {
+                    const photoDoc = doc(db, 'artifacts', appId, 'public', 'data', 'photos', photo.id);
+                    onSnapshot(photoDoc, (snap) => {
+                        const data = snap.exists() ? snap.data() : localData[photo.id];
+                        updatePhotoUI(photo, data);
+                    });
+                } else {
+                    updatePhotoUI(photo, localData[photo.id]);
+                }
+            });
+        }
+
+        function updatePhotoUI(photo, data) {
+            const item = document.getElementById(`item-${photo.id}`);
+            if (!item) return;
+            const isLiked = data.likedBy?.includes(currentUser?.uid);
+
+            item.innerHTML = `
+                <div class="relative overflow-hidden bg-gray-200 aspect-auto">
+                    <img src="${photo.url}" alt="${photo.title}" class="w-full h-auto block cursor-zoom-in hover:scale-105 transition-transform duration-700" 
+                         onerror="this.src='https://via.placeholder.com/800x600?text=Menunggu+Upload+Foto'"
+                         onclick="window.openDetails('${photo.id}', '${photo.url}', '${photo.title}', '${photo.author}')">
+                </div>
+                <div class="p-5">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-gray-800 text-base truncate">${photo.title}</h3>
+                        <button onclick="window.handleLike('${photo.id}')" class="flex items-center space-x-1 group">
+                            <svg class="w-5 h-5 ${isLiked ? 'text-red-500' : 'text-gray-300 group-hover:text-gray-400'} fill-current transition" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            <span class="text-xs font-bold text-gray-600">${data.likes || 0}</span>
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-emerald-600 font-semibold uppercase tracking-wider">Koleksi ${photo.author}</p>
+                </div>
+            `;
+
+            if(activePhotoId === photo.id) renderModalContent(data);
+        }
+
+        window.handleLike = async (id) => {
+            if (!currentUser) return;
+            const photoData = localData[id];
+            if(photoData.likedBy.includes(currentUser.uid)) return;
+
+            if (isFirebaseActive) {
+                const photoDoc = doc(db, 'artifacts', appId, 'public', 'data', 'photos', id);
+                await setDoc(photoDoc, { likes: increment(1), likedBy: arrayUnion(currentUser.uid) }, { merge: true });
+            } else {
+                photoData.likes++;
+                photoData.likedBy.push(currentUser.uid);
+                localStorage.setItem('lensa_alam_data', JSON.stringify(localData));
+                updatePhotoUI(photos.find(p => p.id === id), photoData);
+            }
+        };
+
+        window.openDetails = (id, url, title, author) => {
+            activePhotoId = id;
+            document.getElementById('modal-img').src = url;
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-author').innerText = `Oleh ${author}`;
+            document.getElementById('photo-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            if (modalUnsubscribe) modalUnsubscribe();
+
+            if (isFirebaseActive && currentUser) {
+                const photoDoc = doc(db, 'artifacts', appId, 'public', 'data', 'photos', id);
+                modalUnsubscribe = onSnapshot(photoDoc, (snap) => {
+                    renderModalContent(snap.exists() ? snap.data() : localData[id]);
+                });
+            } else { renderModalContent(localData[id]); }
+        };
+
+        window.closeModal = () => {
+            if (modalUnsubscribe) modalUnsubscribe();
+            document.getElementById('photo-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            activePhotoId = null;
+        };
+
+        window.handleModalLike = () => { if(activePhotoId) window.handleLike(activePhotoId); }
+
+        function renderModalContent(data) {
+            const list = document.getElementById('comment-list');
+            const count = document.getElementById('modal-like-count');
+            const icon = document.getElementById('modal-like-icon');
+            if (!list || !count || !icon) return;
+
+            count.innerText = data.likes || 0;
+            const isLiked = data.likedBy?.includes(currentUser?.uid);
+            icon.className = `w-8 h-8 ${isLiked ? 'text-red-500' : 'text-gray-300'} fill-current`;
+
+            const comments = data.comments || [];
+            list.innerHTML = comments.length ? '' : '<div class="text-center py-10 text-gray-400 text-xs italic">Belum ada diskusi...</div>';
+            comments.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'flex space-x-3 items-start animate-fade-in mb-4';
+                div.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-emerald-700">${c.userId.substring(0,2).toUpperCase()}</div>
+                    <div class="bg-gray-50 p-3 rounded-2xl flex-1 border border-gray-100"><p class="text-xs text-gray-700">${c.text}</p></div>
+                `;
+                list.appendChild(div);
+            });
+            list.scrollTop = list.scrollHeight;
+        }
+
+        document.getElementById('comment-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('comment-input');
+            const text = input.value.trim();
+            if(!text || !activePhotoId || !currentUser) return;
+            const newComment = { userId: currentUser.uid, text: text, timestamp: Date.now() };
+
+            if (isFirebaseActive) {
+                const photoDoc = doc(db, 'artifacts', appId, 'public', 'data', 'photos', activePhotoId);
+                await updateDoc(photoDoc, { comments: arrayUnion(newComment) });
+            } else {
+                localData[activePhotoId].comments.push(newComment);
+                localStorage.setItem('lensa_alam_data', JSON.stringify(localData));
+                renderModalContent(localData[activePhotoId]);
+            }
+            input.value = '';
+        };
+
+        window.onload = initAuth;
+    </script>
+</body>
+</html>
